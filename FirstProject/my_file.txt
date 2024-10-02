@@ -1,0 +1,1 @@
+deployment.apps/frontend created (dry run)
