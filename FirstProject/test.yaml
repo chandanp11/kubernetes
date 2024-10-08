@@ -1,17 +1,40 @@
-apiVersion: apps/v1
-kind: ReplicaSet
-metadata:
-  name: replicaset-1
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      tier: frontend
-  template:
-    metadata:
-      labels:
-        tier: frontend
-    spec:
-      containers:
-        - name: nginx
-          image: nginx
+kubectl describe deployment frontend
+Name:                   frontend
+Namespace:              default
+CreationTimestamp:      Sat, 28 Sep 2024 12:32:36 +0000
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 2
+Selector:               name=webapp
+Replicas:               4 desired | 4 updated | 4 total | 4 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        20
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  name=webapp
+  Containers:
+   simple-webapp:
+    Image:         kodekloud/webapp-color:v2
+    Port:          8080/TCP
+    Host Port:     0/TCP
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  frontend-f8d68f98f (0/0 replicas created)
+NewReplicaSet:   frontend-69b69fcc6d (4/4 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  18m   deployment-controller  Scaled up replica set frontend-f8d68f98f to 4
+  Normal  ScalingReplicaSet  13m   deployment-controller  Scaled up replica set frontend-69b69fcc6d to 1
+  Normal  ScalingReplicaSet  13m   deployment-controller  Scaled down replica set frontend-f8d68f98f to 3 from 4
+  Normal  ScalingReplicaSet  13m   deployment-controller  Scaled up replica set frontend-69b69fcc6d to 2 from 1
+  Normal  ScalingReplicaSet  12m   deployment-controller  Scaled down replica set frontend-f8d68f98f to 1 from 3
+  Normal  ScalingReplicaSet  12m   deployment-controller  Scaled up replica set frontend-69b69fcc6d to 4 from 2
+  Normal  ScalingReplicaSet  12m   deployment-controller  Scaled down replica set frontend-f8d68f98f to 0 from 1
